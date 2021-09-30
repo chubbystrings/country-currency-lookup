@@ -35,7 +35,11 @@ export const SpinLoader = styled.div`
 `;
 
 export const DotLoader = styled.small`
-font-weight: bolder;
+font-weight: 900;
+position: absolute;
+left: 0px;
+right: 0px;
+bottom: 95px;
 &:after {
   content: ' ...';
   animation: dots 1s steps(5, end) infinite;
