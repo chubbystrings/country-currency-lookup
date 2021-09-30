@@ -6,13 +6,17 @@ export const LoginCard = styled.div`
   height: 320px;
   background: #ffffff;
   position: relative;
-  border: 1px solid #f0f0f0;
+  /* border: 1px solid #5ae4ca; */
   border-radius: 12px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.26);
   padding: 5px;
   margin: 120px auto;
   display: flex;
   flex-direction: column;
+  
+  & img {
+    margin: 5px auto;
+  }
 
   & input {
     border: 2px solid #f7f7f7;
@@ -24,7 +28,7 @@ export const LoginCard = styled.div`
     width: 75%;
     margin: 50px auto;
     &:focus {
-        border: 1px solid #5ae4ca;
+        background-color: #f6faf9
     }
   }
 /* 
