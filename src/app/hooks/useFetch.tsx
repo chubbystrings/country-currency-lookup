@@ -3,11 +3,13 @@
 
 const useFetch = (method: string) => {
 
-    const postFetch = async (url: string, payload: Record<string, any>) => {
+    const postFetch = async (url: string, payload: Record<string, any>, token = '') => {
+        console.log(token)
         const res = await fetch(url, {
             method: method, 
             headers: {
               'Content-Type': 'application/json',
+              Authorization: token ? `Bearer ${token}` : ''
             },
             
             body: JSON.stringify(payload)

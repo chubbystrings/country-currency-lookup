@@ -14,9 +14,12 @@ export const Button = styled.button`
     left: 0;
     right: 0;
     margin: 0 auto;
-    background-color: ${(props: Props) => props.disabled ? 'grey' :  '#5ae4ca'};
+    background-color: ${(props: Props) => props.disabled ? '#c1e9e1' :  '#5ae4ca'};
     border: none;
     outline: none;
     cursor: pointer;
+    &:hover {
+        background-color: #c1e9e1;
+    }
 
 `

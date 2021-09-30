@@ -4,6 +4,7 @@ import { LoginCard } from "../../styles/LoginCard.style";
 import { Button } from "../../styles/Button.style";
 import useFetch from "../../../hooks/useFetch";
 import { setUserToken } from "../../../utils/setUserToken";
+import Logo from '../../assets/logo.svg'
 
 const SignIn = () => {
   const [email, setEmail] = useState("");
@@ -33,6 +34,7 @@ const SignIn = () => {
   };
   return (
     <LoginCard>
+      <img src={Logo} alt="logo" style={{ width: "30px"}} />
       <h3>Login</h3>
       <form onSubmit={handleSubmit}>
         <input
@@ -42,7 +44,7 @@ const SignIn = () => {
           value={email}
           onChange={handleChange}
         />
-        <Button disabled={isLoading}>Login</Button>
+        <Button disabled={isLoading}>{isLoading ? 'Please wait..' : 'Login'}</Button>
       </form>
     </LoginCard>
   );

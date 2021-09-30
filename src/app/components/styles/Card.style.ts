@@ -13,6 +13,20 @@ export const Card = styled.div`
   border-radius: 12px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.26);
   padding: 5px;
+  animation: fadeIn 0.5s;
+
+  @keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+  &:hover {
+    box-shadow: 0 2px 15px rgba(0, 0, 0, 0.26);
+  }
 
   & input {
     border: 2px solid #f7f7f7;
@@ -21,7 +35,7 @@ export const Card = styled.div`
     font-size: 1rem;
     border-radius: 4px;
     &:focus {
-        border: 1px solid #5ae4ca;
+      border: 1px solid #5ae4ca;
     }
   }
 
@@ -29,7 +43,6 @@ export const Card = styled.div`
     display: flex;
     width: auto;
     justify-content: space-between;
-
   }
 
   & .inputs {
@@ -46,15 +59,30 @@ export const Card = styled.div`
     border-bottom: 1px solid #f0f0f0;
     text-align: left;
     & .flex {
-        display: flex;
-        justify-content: space-between;
+      display: flex;
+      justify-content: space-between;
+    
+    
+  
+      & li {
+        list-style: none;
+        border: 1px solid #f0f0f0;
+        font-size: 0.8rem;
+        margin-right: 2px;
+        padding: 2px;
+        border-radius: 30px;
+        margin-bottom: 1px;
+      }
     }
   }
-  & footer {
-    text-align: left;
-  }
+
 
   @media screen and (min-width: 930px) {
     width: 310px;
+    
+    & li {
+      display: inline;
+    }
+
   }
 `;
