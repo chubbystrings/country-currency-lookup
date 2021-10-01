@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { ChangeEvent, useEffect, useState } from "react";
-import { Modal, Overlay } from "../../styles/Dialog.style";
+import { Modal, Overlay, ConvertSpinner } from "../../styles/Dialog.style";
 import { DotLoader } from "../../styles/Spinner.style";
 import useFetch from "../../../hooks/useFetch";
 import { getUserToken } from "../../../utils/setUserToken";
@@ -99,7 +99,7 @@ const Dialog: React.FC<Props> = ({ countryDetail, open, close }) => {
             {countryDetail.name}
             <small>{countryDetail.emoji}</small>
           </h4>
-          {converting && <DotLoader>Converting</DotLoader>}
+          {converting && <><DotLoader>Converting </DotLoader> <ConvertSpinner  /> </>}
         </header>
         <div className="currency-converter">
           <div className="inputs">
