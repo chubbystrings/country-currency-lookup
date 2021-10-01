@@ -1,16 +1,25 @@
-import React, { ChangeEvent, FormEvent, useState } from "react";
+import React, { ChangeEvent, FormEvent, useCallback, useState } from "react";
 import { useHistory } from 'react-router-dom'
 import { LoginCard } from "../../styles/LoginCard.style";
 import { Button } from "../../styles/Button.style";
 import useFetch from "../../../hooks/useFetch";
 import { setUserToken } from "../../../utils/setUserToken";
-import Logo from '../../assets/logo.svg'
+import Logo from '../../assets/logo.svg';
+import ErrorModal from "./Error";
 
 const SignIn = () => {
   const [email, setEmail] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const { postFetch } = useFetch("POST");
   const history = useHistory();
+  const [errorMode, setErrorMode] = useState(false);
+  const [errorMsg, setErrorMsg] = useState("");
+
+ 
+
+  const handleModal =  useCallback(() => {
+    setErrorMode(false);
+  }, []);
 
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -29,10 +38,14 @@ const SignIn = () => {
     history.replace('/home')
   } catch (err: any) {
     console.log(err.message);
-    // setError(err.message);
+    setErrorMode(true);
+    setErrorMsg(err.message);
+    setIsLoading(false)
   }
   };
   return (
+    <>
+    <ErrorModal handleClose={handleModal} message={errorMsg} open={errorMode} />
     <LoginCard>
       <img src={Logo} alt="logo" style={{ width: "30px"}} />
       <h3>Login</h3>
@@ -47,6 +60,7 @@ const SignIn = () => {
         <Button disabled={isLoading}>{isLoading ? 'Please wait..' : 'Login'}</Button>
       </form>
     </LoginCard>
+    </>
   );
 };
 

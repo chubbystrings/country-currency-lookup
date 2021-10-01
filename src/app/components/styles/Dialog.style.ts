@@ -16,6 +16,18 @@ export const Modal = styled.div`
   transform: ${(props: { visible: boolean }) =>
     props.visible ? "scale(1)" : "scale(0.0)"};
   transition: transform 300ms;
+  & .error {
+    display: flex;
+    align-items: center;
+    padding-left: 10px;
+    gap: 10px;
+  }
+  & .error p {
+    color: red;
+    font-weight: bolder;
+    text-align: center;
+  }
+
   & h2 {
     font-size: 20px;
   }
@@ -110,4 +122,31 @@ export const Overlay = styled.div`
   width: 100%;
   background-color: rgba(0, 0, 0, 0.15);
   z-index: 10;
+`;
+
+export const ConvertSpinner = styled.div`
+  border-radius: 50%;
+  width: 10px;
+  height: 10px;
+  display: block;
+  border: 3px solid transparent;
+  border-top-color: #5ae4ca;
+  animation: spin 1s ease infinite;
+  position: absolute;
+  right: 93px;
+  top: 95px;
+
+  @media screen and (min-width: 745px) {
+    right: 155px;
+  }
+
+  @media screen and (min-width: 1200px) {
+    right: 250px;
+  }
+
+  @keyframes spin {
+    to {
+      transform: rotateZ(360deg);
+    }
+  }
 `;

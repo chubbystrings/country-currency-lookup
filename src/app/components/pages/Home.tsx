@@ -1,4 +1,4 @@
-import React, { useState, ChangeEvent } from "react";
+import React, { useState, ChangeEvent, useCallback } from "react";
 import { Wrapper, HomeWrapper } from "../styles/Home.style";
 import CountryInfoCard from "../ui/molecules/CountryInfoCard";
 import Spinner from "../ui/molecules/Spinner";
@@ -9,6 +9,7 @@ import { motion } from "framer-motion";
 import { cardTransition, transit } from "../../utils/animate";
 import Navbar from "../ui/molecules/Nav";
 import Logo from "../assets/logo.svg";
+import ErrorModal from "../ui/molecules/Error";
 
 interface COUNTRY {
   name: string;
@@ -20,7 +21,6 @@ interface COUNTRY {
   currencyToSEK: number;
 }
 
-
 const Home: React.FC = () => {
   const [value, setValue] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -28,6 +28,8 @@ const Home: React.FC = () => {
   const { getFetch } = useFetch("GET");
   const [open, setOpen] = useState(false);
   const [singleCountry, setSingleCountry] = useState({} as COUNTRY);
+  const [errorMode, setErrorMode] = useState(false);
+  const [errorMsg, setErrorMsg] = useState("");
 
   const token = localStorage.getItem("countryLookUpToken") as string;
 
@@ -46,26 +48,37 @@ const Home: React.FC = () => {
     setOpen(false);
   };
 
+  const handleErrorModal = useCallback(() => {
+    setErrorMode(false);
+  }, [])
+
   const handleEnter = async (event: React.KeyboardEvent<HTMLInputElement>) => {
     if (event.key === "Enter") {
-      setCountry({} as COUNTRY[]);
-      setIsLoading(true);
-      const countryDetailsArr = [] as COUNTRY[];
-      const url = `https://country-lookup-server.herokuapp.com/api/v1/country/${value}`;
+      try {
+        setCountry({} as COUNTRY[]);
+        setIsLoading(true);
+        const countryDetailsArr = [] as COUNTRY[];
+        const url = `https://country-lookup-server.herokuapp.com/api/v1/country/${value}`;
 
-      const data = await getFetch(url, token);
+        const data = await getFetch(url, token);
 
-      let countryDetails = {} as COUNTRY;
+        let countryDetails = {} as COUNTRY;
 
-      console.log(data.payload);
-      data.payload.forEach((country: Record<string, any>) => {
-        countryDetails = { ...(country as COUNTRY) };
-        countryDetailsArr.push(countryDetails);
-      });
+        console.log(data.payload);
+        data.payload.forEach((country: Record<string, any>) => {
+          countryDetails = { ...(country as COUNTRY) };
+          countryDetailsArr.push(countryDetails);
+        });
 
-      setCountry(countryDetailsArr);
-      setValue("");
-      setIsLoading(false);
+        setCountry(countryDetailsArr);
+        setValue("");
+        setIsLoading(false);
+      } catch (error: any) {
+        setErrorMode(true)
+        setErrorMsg(error.message);
+        setValue("");
+        setIsLoading(false);
+      }
     }
   };
   return (
@@ -77,6 +90,7 @@ const Home: React.FC = () => {
       transition={transit}
     >
       <Navbar />
+      <ErrorModal handleClose={handleErrorModal} open={errorMode} message={errorMsg} />
       <HomeWrapper>
         <img src={Logo} alt="logo" />
         <InputWrapper>
@@ -91,15 +105,14 @@ const Home: React.FC = () => {
         <Wrapper>
           {country.length > 0 &&
             country.map((c, i) => (
-             
-                <CountryInfoCard
-                  countryDetails={c}
-                  onClick={() => {
-                    setSingleCountry(c);
-                    handleModal();
-                  }}
-                  key={`${c.phone + i}`}
-                />
+              <CountryInfoCard
+                countryDetails={c}
+                onClick={() => {
+                  setSingleCountry(c);
+                  handleModal();
+                }}
+                key={`${c.phone + i}`}
+              />
             ))}
           {country.length === 0 && <h2>Oops! No Results :( </h2>}
         </Wrapper>
