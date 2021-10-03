@@ -1,4 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
+
 import React, { ChangeEvent, useEffect, useState } from "react";
 import { Modal, Overlay, ConvertSpinner } from "../../styles/Dialog.style";
 import { DotLoader } from "../../styles/Spinner.style";
@@ -46,7 +47,14 @@ const Dialog: React.FC<Props> = ({ countryDetail, open, close }) => {
     setConverting(true);
   };
 
+  // const handleKeyup = (e: React.KeyboardEvent<HTMLInputElement>) => {
+  //   if (e.currentTarget.value === '0') {
+  //     setValue(1)
+  //   }
+  // }
+
   useEffect(() => {
+    console.log("haaaaaa");
     const debounce = setTimeout(() => {
       const convert = async () => {
         const token = getUserToken() as string;
@@ -86,7 +94,7 @@ const Dialog: React.FC<Props> = ({ countryDetail, open, close }) => {
     }, 3000);
 
     return () => clearTimeout(debounce);
-  }, [value, currency, open]);
+  }, [value, currency, open, postFetch]);
 
   return (
     <>
@@ -106,7 +114,7 @@ const Dialog: React.FC<Props> = ({ countryDetail, open, close }) => {
             <label htmlFor={currency}>{currency}</label>
             <input
               min="1"
-              defaultValue={value}
+              value={value}
               onChange={handleChange}
               type="number"
               id={currency}
