@@ -27,7 +27,6 @@ const ErrorModal: React.FC<{message: string; open: boolean; handleClose: () => v
             <div className="error">
                 <FcCancel /> <p>Oops!! {message}</p>
             </div>
-
         </Modal>
     )
 }

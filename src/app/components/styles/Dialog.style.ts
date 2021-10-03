@@ -133,8 +133,12 @@ export const ConvertSpinner = styled.div`
   border-top-color: #5ae4ca;
   animation: spin 1s ease infinite;
   position: absolute;
-  right: 93px;
+  right: calc(50% - 55px);
   top: 95px;
+/* 
+  @media screen and (min-width: 425px) {
+    right: 80px;
+  }
 
   @media screen and (min-width: 745px) {
     right: 155px;
@@ -142,7 +146,7 @@ export const ConvertSpinner = styled.div`
 
   @media screen and (min-width: 1200px) {
     right: 250px;
-  }
+  } */
 
   @keyframes spin {
     to {
